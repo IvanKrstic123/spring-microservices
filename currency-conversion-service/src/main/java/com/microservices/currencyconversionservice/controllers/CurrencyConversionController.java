@@ -45,7 +45,7 @@ public class CurrencyConversionController {
                 );
     }
 
-    // same funtionality as getmapping above
+    // same funtionality as getmapping above but feign used
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversionFeign(@PathVariable String from,
                                                           @PathVariable String to,
