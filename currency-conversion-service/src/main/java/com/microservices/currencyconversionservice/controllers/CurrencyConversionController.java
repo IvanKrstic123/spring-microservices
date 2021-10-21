@@ -20,6 +20,7 @@ public class CurrencyConversionController {
         this.proxy = proxy;
     }
 
+    /* not working since dockerizing microservices (localhost not recognized by container) */
     @GetMapping("/currency-conversion/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversion(@PathVariable String from,
                                                           @PathVariable String to,
@@ -45,7 +46,7 @@ public class CurrencyConversionController {
                 );
     }
 
-    // same funtionality as getmapping above but feign used
+    // same funtionality as getmapping above but feign used - PROXY
     @GetMapping("/currency-conversion-feign/from/{from}/to/{to}/quantity/{quantity}")
     public CurrencyConversion calculateCurrencyConversionFeign(@PathVariable String from,
                                                           @PathVariable String to,
