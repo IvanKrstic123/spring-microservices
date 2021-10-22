@@ -11,12 +11,12 @@ http://locahost:8761/
     -- API Gateway
 http://localhost:8765/
 
-    -- stari linkovi pre LoadBalancera - API Gateway
+    -- stari linkovi pre LoadBalancera ne rade vise- API Gateway
 http://localhost:8765/currency-exchange/currency-exchange/from/USD/to/INR
 http://localhost:8765/currency-conversion/currency-conversion/from/USD/to/INR/quantity/10
 http://localhost:8765/currency-conversion/currency-conversion-feign/from/USD/to/INR/quantity/10
 
-    -- API gateway LoadBalancer novi linkovi ne rade vise - API Gateway
+    -- API gateway LoadBalancer novi linkovi - API Gateway
 http://localhost:8765/currency-exchange/from/USD/to/INR
 http://localhost:8765/currency-conversion/from/USD/to/INR/quantity/10 // ne radi od kako smo dokerizovali mikroservise (localhost)
 http://localhost:8765/currency-conversion-feign/from/USD/to/INR/quantity/10
