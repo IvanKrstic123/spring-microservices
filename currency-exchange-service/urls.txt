@@ -6,7 +6,7 @@ http://localhost:8100/currency-conversion/from/USD/to/INR/quantity/10 //  // ne 
 http://localhost:8100/currency-conversion-feign/from/USD/to/INR/quantity/10
 
     -- Eureka
-http://locahost:8761/
+http://localhost:8761/
 
     -- API Gateway
 http://localhost:8765/

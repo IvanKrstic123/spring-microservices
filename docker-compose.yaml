@@ -13,7 +13,9 @@ services:
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
-
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   currency-conversion:
     image: krstic8687/mmv1-currency-conversion-service:0.0.1-SNAPSHOT
@@ -24,9 +26,13 @@ services:
       - currency-network
     depends_on:
       - naming-server
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   api-gateway:
     image: krstic8687/mmv1-api-gateway:0.0.1-SNAPSHOT
@@ -37,9 +43,13 @@ services:
       - currency-network
     depends_on:
       - naming-server
+      - rabbitmq
     environment:
       EUREKA.CLIENT.SERVICEURL.DEFAULTZONE: http://naming-server:8761/eureka/
       SPRING.ZIPKIN.BASEURL: http://zipkin-server:9411/
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_ZIPKIN_SENDER_TYPE: rabbit
 
   naming-server:
     image: krstic8687/mmv1-naming-server:0.0.1-SNAPSHOT
@@ -49,12 +59,27 @@ services:
     networks:
       - currency-network
 
-#spring.zipkin.baseUrl=http://localhost:9411/
+  #docker run -p 9411:9411 openzipkin/zipkin:2.23
+
   zipkin-server:
-    image: openzipkin/zipkin:latest
+    image: openzipkin/zipkin:2.23
     mem_limit: 300m
     ports:
       - "9411:9411"
+    networks:
+      - currency-network
+    environment:
+      RABBIT_URI: amqp://guest:guest@rabbitmq:5672
+    depends_on:
+      - rabbitmq
+    restart: always #Restart if there is a problem starting up
+
+  rabbitmq:
+    image: rabbitmq:3.9-management
+    mem_limit: 300m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
     networks:
       - currency-network
 
